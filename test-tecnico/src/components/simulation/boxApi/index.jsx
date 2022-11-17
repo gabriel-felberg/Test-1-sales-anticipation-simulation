@@ -8,13 +8,15 @@ const BoxApi = (response) => {
   return (
     <div>
       <h2>VOCÊ RECEBERÁ:</h2>
-      <p>
-        Amanhã: <span>R$ 0,00</span>
-      </p>
-      console.log(arrCards)
-      {arrCards?.map((e) => (
-        <Card text={e[0]} price={e[1]} />
-      ))}
+      {arrCards?.map((e) =>
+        e[0] === "1" ? (
+          <p>
+            Amanhã: <span>R${e[1]}</span>
+          </p>
+        ) : (
+          <Card text={e[0]} price={e[1]} />
+        )
+      )}
     </div>
   );
 };

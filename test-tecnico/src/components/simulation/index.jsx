@@ -2,6 +2,7 @@ import BoxApi from "./boxApi";
 import Form from "./form";
 import axios from "axios";
 import { useState, useEffect } from "react";
+
 // interface IResponse{
 //   "30" : number;
 //   "60" : number;
@@ -12,13 +13,15 @@ const Simulation = () => {
   const [response, setResponse] = useState([]);
   const [request, setRequest] = useState([]);
 
+
   useEffect(() => {
     if (request["mdr"]) {
       refreshSeach();
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [request]);
 
-  function refreshSeach(request) {
+  function refreshSeach() {
     console.log(request);
     axios
       .post(`https://frontend-challenge-7bu3nxh76a-uc.a.run.app`, request)
@@ -36,6 +39,7 @@ const Simulation = () => {
         <div className="flex">
           <Form setRequest={setRequest} refreshSeach={refreshSeach} />
           <BoxApi response={response} />
+          
         </div>
       </div>
     </main>
