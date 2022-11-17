@@ -6,7 +6,8 @@ const Form = ({ setRequest }) => {
   const [amount, setAmount] = useState(undefined);
   const [installments, setInstallments] = useState(undefined);
   const [mdr, setMdr] = useState(undefined);
-  const [state, setState] = useState(true);
+  const [days, setDay] = useState(undefined);
+  const [state, setState] = useState(false);
 
   function callback(event) {
     event.preventDefault();
@@ -14,26 +15,38 @@ const Form = ({ setRequest }) => {
       setAmount(event.target.value);
     } else if (event.target.name === "installments") {
       setInstallments(event.target.value);
-    } else {
+    } else if (event.target.name === "mdr") {
       setMdr(event.target.value);
+    } else {
+      setDay(event.target.value);
     }
-    //if (event.target.name === "mdr") {
-    //  setMdr(event.target.value);
-    //}
-    console.log(amount, installments, mdr);
   }
+  function Transform(day) {
+    let arr = []
+    day
+      ?.split(",")
+      ?.map((e) =>
+        e === "[" || e === "]" || e === " " || e === ","
+          ? undefined
+          : arr.push(Number(e))
+      );
+    return arr
+    }
   useEffect(() => {
+    Transform(days);
     if (
       (amount !== undefined) &
-      (installments !== undefined) &
-      (mdr !== undefined)
+        (installments !== undefined) &
+        (mdr !== undefined) ||
+      days !== undefined
     ) {
-      setRequest({ amount, installments, mdr });
+      days
+        ? setRequest({ amount, installments, mdr, days: Transform(days) })
+        : setRequest({ amount, installments, mdr });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mdr, amount, installments]);
+  }, [mdr, amount, installments, days]);
 
-  console.log(amount, installments, mdr);
   return (
     <form>
       <label>
@@ -53,13 +66,21 @@ const Form = ({ setRequest }) => {
         />
       </label>
       <label>
-        <h3>Informe o percentual de MDR</h3>
+        <h3>percentual de MDR</h3>
         <input type="number" name="mdr" onChange={(event) => callback(event)} />
       </label>
       <Switch
         checked={state}
         onChange={() => (state ? setState(false) : setState(true))}
       />
+      {state ? (
+        <label>
+          <h3>quantidade de dias</h3>
+          <input value={days} type="text" name="day" onChange={(event) => callback(event)} />
+        </label>
+      ) : (
+        <div></div>
+      )}
     </form>
   );
 };

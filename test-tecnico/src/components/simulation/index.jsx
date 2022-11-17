@@ -22,7 +22,6 @@ const Simulation = () => {
   }, [request]);
 
   function refreshSeach() {
-    console.log(request);
     axios
       .post(`https://frontend-challenge-7bu3nxh76a-uc.a.run.app`, request)
       .then((response) => {
