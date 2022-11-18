@@ -32,10 +32,10 @@ const Simulation = () => {
       });
   }
   return (
-    <main className="flex flex-col h-screen items-center justify-center w-96">
-      <div className="flex flex-col border-2 items-center justify-center w-96 h-96 bg-yellow-600">
-        <h2>Simule sua Antecipação</h2>
-        <div className="flex">
+    <main className="flex flex-col h-screen items-center justify-center w-screen md:w-max ">
+      <div className="flex flex-col border-2 justify-center w-11/12 md:w-11/12  p-10 bg-blue-800 rounded-xl gap-6">
+        <h2 className="text-xl"><b>Simule sua Antecipação</b></h2>
+        <div className="flex flex-col md:flex-row space-y-3 md:space-x-10 ">
           <Form setRequest={setRequest} refreshSeach={refreshSeach} />
           <BoxApi response={response} />
           

@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
-import CardError from "./errors/cardError";
+import VitrineCardsError from "./errors";
 
 const Form = ({ setRequest }) => {
-  const [amount, setAmount] = useState(undefined);
-  const [installments, setInstallments] = useState(undefined);
-  const [mdr, setMdr] = useState(undefined);
-  const [days, setDay] = useState(undefined);
+  const [amount, setAmount] = useState(null);
+  const [installments, setInstallments] = useState(null);
+  const [mdr, setMdr] = useState(null);
+  const [days, setDay] = useState(null);
   const [state, setState] = useState(false);
 
   function callback(event) {
     event.preventDefault();
     if (event.target.name === "amount") {
-      console.log(event.target.value);
       setAmount(event.target.value);
     } else if (event.target.name === "installments") {
       console.log(event.target.value);
@@ -29,91 +28,103 @@ const Form = ({ setRequest }) => {
       ?.split(",")
       ?.map((e) =>
         e === "[" || e === "]" || e === " " || e === ","
-          ? undefined
+          ? null
           : arr.push(Number(e))
       );
     return arr;
   }
-  useEffect(() => {
+  function PushValues() {
     Transform(days);
-    if (
-      (amount !== undefined) &
-        (installments !== undefined) &
-        (mdr !== undefined) ||
-      days !== undefined
-    ) {
-      days
-        ? setRequest({ amount, installments, mdr, days: Transform(days) })
-        : setRequest({ amount, installments, mdr });
+    console.log(days);
+    if (days) {
+      setRequest({ amount, installments, mdr, days: Transform(days) });
+    } else{
+      setRequest({ amount, installments, mdr });
     }
+    //if ((amount !== null) & (installments !== null) & (mdr !== null)) {
+    //  setRequest({ amount, installments, mdr });
+    //}
+  }
+  useEffect(() => {
+    PushValues();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mdr, amount, installments, days]);
+  }, [days, mdr, amount, installments]);
+  function SetFalse(event) {
+    setState(false);
+    callback(event);
+    PushValues();
+  }
 
   return (
-    <section>
-      <form>
-        <label>
-          <h3>Informe o valor da venda</h3>
+    <section className="flex flex-col ">
+      <Switch
+        checked={state}
+        label="Dias"
+        name="day"
+        onChange={(event) => (state ? SetFalse(event) : setState(true))}
+      />
+      <form className="flex flex-col mb-10 space-y-4 w-full text-align-center">
+        <div className="">
+          <label htmlFor="amount" className="text-sm">
+            Informe o valor da venda *
+          </label>
           <input
             type="number"
             name="amount"
+            id="amount"
             placeholder="Venda Total"
             onChange={(event) => callback(event)}
+            className="rounded"
           />
-        </label>
-        <label>
-          <h3>Em quantas parcelas</h3>
+        </div>
+        <div>
+          <label htmlFor="installments" className="text-sm">
+            Em quantas parcelas *
+          </label>
           <input
             type="number"
             name="installments"
             placeholder="Parcelas"
             onChange={(event) => callback(event)}
+            className="rounded"
           />
-        </label>
-        <label>
-          <h3>percentual de MDR</h3>
+        </div>
+        <div>
+          <label htmlFor="mdr" className="text-sm">
+            percentual de MDR *
+          </label>
           <input
             type="number"
             name="mdr"
             placeholder="MDR"
             onChange={(event) => callback(event)}
+            className="rounded"
           />
-        </label>
-        <Switch
-          checked={state}
-          onChange={() => (state ? setState(false) : setState(true))}
-        />
+        </div>
         {state ? (
-          <label>
-            <h3>quantidade de dias</h3>
+          <div>
+            <label htmlFor="day" className="text-sm">
+              quantidade de dias
+            </label>
             <input
-              value={days}
               type="text"
               name="day"
               placeholder="Quantidade de dias"
               onChange={(event) => callback(event)}
+              className="rounded"
             />
-          </label>
-        ) : undefined}
+          </div>
+        ) : null}
       </form>
-      {amount < 1000 ? (
-        <CardError text="o valor da venda deve ser maior que 999" />
-      ) : undefined}
-      {console.log(Transform(days)?.length > 10)}
-      {0 >= installments || installments > 12 ? (
-        <CardError text="as parcelas devem estar entre 1 e 12" />
-      ) : undefined}
-      {0 > mdr || mdr > 100 ? (
-        <CardError text="o mdr deve ser maior que 0 e menor que 100" />
-      ) : undefined}
-      {state ? (
-        Transform(days)?.length <= 0 || Transform(days)?.length > 10 ? (
-          <CardError text="A quantidade de dias deve maior que 0 e menor que 10" />
-        ) : undefined
-      ) : undefined}
+      <VitrineCardsError
+        amount={amount}
+        installments={installments}
+        mdr={mdr}
+        days={days}
+        Transform={Transform}
+      />
     </section>
   );
-  //<VitrineCardsError amount={amount} installments={installments} mdr={mdr} days={days} Transform={Transform}/>
 };
 
 export default Form;
