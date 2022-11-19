@@ -1,3 +1,5 @@
+
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,6 +9,9 @@ module.exports = {
     extend: {
       fontFamily:{
         poppins:"'Poppins', sans-serif",
+      },
+    colors:{
+      "rebeccapurple": "#663399"
       }
     },
   },
