@@ -13,7 +13,6 @@ const Simulation = () => {
   const [response, setResponse] = useState([]);
   const [request, setRequest] = useState([]);
 
-
   useEffect(() => {
     if (request["mdr"]) {
       refreshSeach();
@@ -33,12 +32,15 @@ const Simulation = () => {
   }
   return (
     <main className="flex flex-col h-screen items-center justify-center w-screen md:w-max ">
-      <div className="flex flex-col border-2 justify-center w-11/12 md:w-11/12  p-10 bg-blue-800 rounded-xl gap-6">
-        <h2 className="text-xl"><b>Simule sua Antecipação</b></h2>
-        <div className="flex flex-col md:flex-row space-y-3 md:space-x-10 ">
+      <div className="flex bg-white border-2 rounded">
+        <div className="flex flex-col p-12">
+          <h2 className="text-xl">
+            <b>Simule sua Antecipação</b>
+          </h2>
           <Form setRequest={setRequest} refreshSeach={refreshSeach} />
+        </div>
+        <div className="bg-gray-100 h-full px-12 pt-20 pb-12">
           <BoxApi response={response} />
-          
         </div>
       </div>
     </main>
