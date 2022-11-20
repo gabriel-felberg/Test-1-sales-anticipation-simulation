@@ -1,8 +1,11 @@
-import Simulation from "./components/simulation";
+
+import Home from "./pages/home";
 
 function App() {
   return (
-    <Simulation/>
+    <div>
+      <Home/>
+    </div>
   );
 }
 
