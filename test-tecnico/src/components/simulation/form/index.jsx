@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { CounterContext } from "../../../Providers/counter";
 import { useEffect } from "react";
 import Switch from "@mui/material/Switch";
-import VitrineCardsError from "./errors";
+import CardError from "./errors/cardError";
 
-const Form = ({setRequest}) => {
+const Form = ({ setRequest }) => {
   const {
     amount,
     installments,
@@ -14,7 +14,6 @@ const Form = ({setRequest}) => {
     setState,
     callback,
     Transform,
-
   } = useContext(CounterContext);
 
   function PushValues() {
@@ -48,7 +47,7 @@ const Form = ({setRequest}) => {
         />
         <label htmlFor="days">Ativar dias</label>
       </div>
-      <form className="flex flex-col mb-10 space-y-4 w-full text-align-center">
+      <form className="flex flex-col mb-10 w-full space-y-5 text-align-center ">
         <div className="flex flex-col">
           <label htmlFor="amount" className="text-sm">
             Informe o valor da venda *
@@ -59,8 +58,13 @@ const Form = ({setRequest}) => {
             id="amount"
             placeholder="Venda Total"
             onChange={(event) => callback(event)}
-            className="rounded pl-2 w-56"
+            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
           />
+          {amount !== null ? (
+            amount < 1000 ? (
+              <CardError text="A venda deve ser maior que 999" />
+            ) : null
+          ) : null}
         </div>
         <div className="flex flex-col">
           <label htmlFor="installments" className="text-sm">
@@ -71,8 +75,18 @@ const Form = ({setRequest}) => {
             name="installments"
             placeholder="Parcelas"
             onChange={(event) => callback(event)}
-            className="rounded pl-2 w-56"
+            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 "
           />
+          {installments !== null ? (
+            installments > 12 ? (
+              <CardError text="A parcela deve ser menor que 12" />
+            ) : null
+          ) : null}
+          {installments !== null ? (
+            0 >= installments ? (
+              <CardError text="A parcela deve ser maior que 1" />
+            ) : null
+          ) : null}
         </div>
         <div className="flex flex-col">
           <label htmlFor="mdr" className="text-sm">
@@ -83,8 +97,18 @@ const Form = ({setRequest}) => {
             name="mdr"
             placeholder="MDR"
             onChange={(event) => callback(event)}
-            className="rounded pl-2 w-56"
+            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
           />
+          {mdr !== null ? (
+            0 > mdr ? (
+              <CardError text="o mdr deve ser maior que 0" />
+            ) : null
+          ) : null}
+          {mdr !== null ? (
+            mdr > 100 ? (
+              <CardError text="o mdr deve ser menor que 100" />
+            ) : null
+          ) : null}
         </div>
         {state ? (
           <div className="flex flex-col">
@@ -96,18 +120,21 @@ const Form = ({setRequest}) => {
               name="day"
               placeholder="Dias em sequencia"
               onChange={(event) => callback(event)}
-              className="rounded pl-2 w-56"
+              className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             />
+            {days !== null ? (
+              Transform(days)?.length <= 0 ? (
+                <CardError text="Quantidade de dias deve ser maior que 0" />
+              ) : null
+            ) : null}
+            {days !== null ? (
+              Transform(days)?.length > 10 ? (
+                <CardError text="Quantidade de dias deve ser menor que 10" />
+              ) : null
+            ) : null}
           </div>
         ) : null}
       </form>
-      <VitrineCardsError
-        amount={amount}
-        installments={installments}
-        mdr={mdr}
-        days={days}
-        Transform={Transform}
-      />
     </section>
   );
 };
