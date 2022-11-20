@@ -1,9 +1,10 @@
-import Simulation from "./components/simulation";
+
+import Home from "./pages/home";
 
 function App() {
   return (
     <div>
-      <Simulation />
+      <Home/>
     </div>
   );
 }

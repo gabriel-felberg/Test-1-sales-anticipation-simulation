@@ -58,7 +58,7 @@ const Form = ({ setRequest }) => {
             id="amount"
             placeholder="Venda Total"
             onChange={(event) => callback(event)}
-            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 h-8"
           />
           {amount !== null ? (
             amount < 1000 ? (
@@ -75,7 +75,7 @@ const Form = ({ setRequest }) => {
             name="installments"
             placeholder="Parcelas"
             onChange={(event) => callback(event)}
-            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 "
+            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 h-8 "
           />
           {installments !== null ? (
             installments > 12 ? (
@@ -97,7 +97,7 @@ const Form = ({ setRequest }) => {
             name="mdr"
             placeholder="MDR"
             onChange={(event) => callback(event)}
-            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+            className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 h-8"
           />
           {mdr !== null ? (
             0 > mdr ? (
@@ -120,7 +120,7 @@ const Form = ({ setRequest }) => {
               name="day"
               placeholder="Dias em sequencia"
               onChange={(event) => callback(event)}
-              className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+              className="rounded pl-2 w-56 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 h-8"
             />
             {days !== null ? (
               Transform(days)?.length <= 0 ? (
