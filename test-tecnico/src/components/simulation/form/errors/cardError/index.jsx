@@ -1,6 +1,6 @@
 const CardError = ({text}) => {
   return (
-    <div>{text}</div>
+    <p className="text-gray-300 text-xs">{text}</p>
   )
 }
 
