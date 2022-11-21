@@ -1,6 +1,6 @@
 # O desenvolvedor deverá conter os seguintes programas instalados
 ```git
-1.yarn
+1.node
 2.git
 3.VScode
 ```
